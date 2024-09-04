@@ -1,0 +1,4 @@
+sicore==2.0.3
+scikit-learn==1.5.1
+streamlit==1.38.0
+barfi==0.7.0
