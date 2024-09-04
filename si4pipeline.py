@@ -326,6 +326,7 @@ base_blocks = [
 def main():
     st.set_page_config(
         page_icon="🍍",
+        page_title="SI4PIPELINE",
         layout="wide")
 
     st.title('SI4PIPELINE')
