@@ -232,7 +232,7 @@ class BaseTest:
 
                 elif st.session_state.dataset == 'abalone':
                     features = [
-                        "sex", "length", "diameter",
+                        "length", "diameter",
                         "height", "whole_weight", "shucked_weight",
                         "viscera_weight", "shell_weight"
                     ]
