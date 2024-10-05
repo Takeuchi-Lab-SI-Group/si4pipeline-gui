@@ -118,7 +118,7 @@ soft_ipod = create_node(
     plp.soft_ipod,
     outputs=["O"],
     inputs=["X", "y"],
-    options={"penalty coefficient": {"default": 0.02, "type": float}},
+    options={"penalty coefficient": {"default": 0.015, "type": float}},
 )
 remove_outliers = create_node(
     "remove_outliers", plp.remove_outliers, outputs=["X", "y"], inputs=["X", "y", "O"]
@@ -204,6 +204,7 @@ class BaseTest:
                 st.session_state['results_df'] = results_df
 
             elif st.session_state.dataset in [
+                "prostate_cancer",
                 "red_wine",
                 "concrete",
                 "abalone",
@@ -211,6 +212,15 @@ class BaseTest:
             ]:
                 if st.session_state.dataset == "uploaded":
                     X, y, features = st.session_state.uploaded_dataset
+
+                elif st.session_state.dataset == 'prostate_cancer':
+                    features = [
+                        'lcavol', 'lweight', 'age', 'lbph', 'svi', 
+                        'lcp', 'gleason', 'pgg45'
+                    ]
+                    with open("dataset/prostate_cancer.pkl", "rb") as f:
+                        X, y = pickle.load(f)
+
                 elif st.session_state.dataset == 'red_wine':
                     features = [
                         "fixed_acidity", "volatile_acidity", "citric_acid",
@@ -250,7 +260,7 @@ class BaseTest:
                 print("Inference results are :\n")
                 for each_feature, p_value in zip(M, p_list):
                     print(
-                        f'{features[each_feature]}:\np-value is {p_value:.3f}, \
+                        f'{features[each_feature]}:\np-value is {p_value:.6f}, \
                             {"significant" if p_value <= 0.05 else "not significant"}\n'
                     )
                     significance_status = "significant"\
@@ -260,7 +270,7 @@ class BaseTest:
                     significance_status = "significant" if p_value <= 0.05 else "not significant"
                     result = {
                         'Feature': features[each_feature],
-                        'p-value': round(p_value, 3),
+                        'p-value': round(p_value, 6),
                         'Significance': significance_status
                     }
                     results.append(result)
@@ -359,6 +369,7 @@ def main():
         if uploaded_file is None:
             existing_data_options = [
                 "-",
+                "prostate_cancer",
                 "random",
                 "red_wine",
                 "concrete",
