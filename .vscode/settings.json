@@ -1,0 +1,5 @@
+{
+    "python.analysis.extraPaths": [
+        "/home/nishino.shuichi/micromamba/envs/si4pipeline/lib/python3.12/site-packages",
+    ]
+}
