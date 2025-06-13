@@ -1,4 +1,4 @@
-from barfi import Block
+from barfi.flow import Block
 
 
 def get_parameters(parameter_text, type_converter=float):

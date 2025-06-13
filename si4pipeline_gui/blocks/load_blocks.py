@@ -1,4 +1,4 @@
-from barfi import Block
+from barfi.flow import Block
 
 
 def get_dataset_loader_blocks(st, plp):

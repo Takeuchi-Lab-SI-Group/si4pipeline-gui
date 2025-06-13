@@ -1,78 +1,78 @@
 from .node_factory import create_node
 
 
-def get_base_blocks(plp):
+def get_algorithm_blocks(plp):
     mean_value_imputation = create_node(
-        "mean_value_imputation",
+        "MVI: Mean Value Imputation",
         plp.mean_value_imputation,
         outputs=["y'"],
         inputs=["X", "y"],
     )
+    regression_imputation = create_node(
+        "MVI: Regression Imputation",
+        plp.definite_regression_imputation,
+        outputs=["y'"],
+        inputs=["X", "y"],
+    )
     soft_ipod = create_node(
-        "soft_ipod",
+        "OD: Soft IPOD",
         plp.soft_ipod,
         outputs=["O"],
         inputs=["X", "y"],
         options={"penalty coefficient": {"default": 0.015, "type": float}},
     )
+    cook_distance = create_node(
+        "OD: Cook Distance",
+        plp.cook_distance,
+        outputs=["O"],
+        inputs=["X", "y"],
+        options={"penalty coefficient": {"default": 3.0, "type": float}},
+    )
     remove_outliers = create_node(
-        "remove_outliers",
+        "Remove Outliers",
         plp.remove_outliers,
         outputs=["X", "y"],
         inputs=["X", "y", "O"],
     )
     marginal_screening = create_node(
-        "marginal_screening",
+        "FS: Marginal Screening",
         plp.marginal_screening,
         outputs=["M"],
         inputs=["X", "y"],
         options={"number of features": {"default": 5, "type": int}},
     )
-    extract_features = create_node(
-        "extract_features", plp.extract_features, outputs=["X"], inputs=["X", "M"]
-    )
     stepwise_feature_selection = create_node(
-        "stepwise_feature_selection",
+        "FS: Stepwise Feature Selection",
         plp.stepwise_feature_selection,
         outputs=["M"],
         inputs=["X", "y"],
         options={"number of features": {"default": 3, "type": int}},
     )
     lasso = create_node(
-        "lasso",
+        "FS: Lasso",
         plp.lasso,
         outputs=["M"],
         inputs=["X", "y"],
         options={"penalty coefficient": {"default": 0.08, "type": float}},
     )
-    union = create_node("union", plp.union, outputs=["M"], inputs=["M1", "M2"])
-    regression_imputation = create_node(
-        "regression_imputation",
-        plp.definite_regression_imputation,
-        outputs=["y'"],
-        inputs=["X", "y"],
+    extract_features = create_node(
+        "Feature Extraction", plp.extract_features, outputs=["X"], inputs=["X", "M"]
     )
-    cook_distance = create_node(
-        "cook_distance",
-        plp.cook_distance,
-        outputs=["O"],
-        inputs=["X", "y"],
-        options={"penalty coefficient": {"default": 3.0, "type": float}},
-    )
+    union = create_node("Union", plp.union, outputs=["M"], inputs=["M1", "M2"])
     intersection = create_node(
-        "intersection", plp.intersection, outputs=["M"], inputs=["M1", "M2"]
+        "Intersection", plp.intersection, outputs=["M"], inputs=["M1", "M2"]
     )
 
     return [
         mean_value_imputation,
+        regression_imputation,
         soft_ipod,
+        cook_distance,
         remove_outliers,
         marginal_screening,
-        extract_features,
         stepwise_feature_selection,
         lasso,
+        extract_features,
         union,
-        regression_imputation,
-        cook_distance,
         intersection,
     ]

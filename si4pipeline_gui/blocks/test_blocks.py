@@ -1,4 +1,4 @@
-from barfi import Block
+from barfi.flow import Block
 
 from .base_test import BaseTest
 
@@ -25,11 +25,11 @@ class TestWithMultiPipelines(BaseTest):
 
 
 def get_test_blocks(st):
-    test = Block(name="test")
+    test = Block(name="Test")
     test.add_input(name="M")
     test.add_compute(Test(st).perform_inference)
 
-    test_with_multi_pipeline = Block(name="test_with_multi_pipeline")
+    test_with_multi_pipeline = Block(name="Test with Multi Pipelines")
     test_with_multi_pipeline.add_input(name="M1")
     test_with_multi_pipeline.add_input(name="M2")
     test_with_multi_pipeline.add_compute(TestWithMultiPipelines(st).perform_inference)
