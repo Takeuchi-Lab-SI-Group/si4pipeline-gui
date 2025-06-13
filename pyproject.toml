@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name            = "si4pipeline-gui"
-version         = "0.1.6"
+version         = "0.7.0"
 description     = "A Streamlit-based GUI for statistical test for feature selection pipeline via selective inference"
 readme          =  { file = "README.md", content-type = "text/markdown" }
 authors         = [{ name = "Takeuchi Lab"}]
