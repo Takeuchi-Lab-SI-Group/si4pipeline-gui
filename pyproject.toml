@@ -4,13 +4,14 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name            = "si4pipeline-gui"
-version         = "0.7.0"
+version         = "0.7.1"
 description     = "A Streamlit-based GUI for statistical test for feature selection pipeline via selective inference"
 readme          =  { file = "README.md", content-type = "text/markdown" }
 authors         = [{ name = "Takeuchi Lab"}]
 maintainers     = [{ name = "Shuichi NISHINO", email = "nishino.shuichi.nagoyaml@gmail.com" }]
 license         = "MIT"
 classifiers = [
+    "license :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
